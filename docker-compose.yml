@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  sql.data:
+    image: microsoft/mssql-server-linux:2017-latest
+
+  nosql.data:
+    image: mongo
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    
+  webmvc:
+    image: ${DOCKER_REGISTRY-}webmvc
+    build:
+      context: .
+      dockerfile: src/WebApps/WebMVC/Dockerfile
+      
+  webspa:
+    image: ${DOCKER_REGISTRY-}webspa
+    build:
+      context: .
+      dockerfile: src/WebApps/WebSPA/Dockerfile
+     
+

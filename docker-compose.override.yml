@@ -1,0 +1,38 @@
+version: '3.4'
+
+services:
+  sql.data:
+    environment:
+      - SA_PASSWORD=Pass@word
+      - ACCEPT_EULA=Y
+    ports:
+      - "5433:1433"    # Important: In a production environment your should remove the external port
+    volumes:
+        - sql1data:/var/opt/mssql
+        
+  nosql.data:
+    ports:
+      - "27017:27017"  # Important: In a production environment your should remove the external port
+    volumes:
+      - mongodata:/data/db
+
+  rabbitmq:
+    ports:
+      - "15672:15672"  # Important: In a production environment your should remove the external port
+      - "5672:5672"    # Important: In a production environment your should remove the external port
+      
+  webmvc:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "32771:80"
+      
+  webspa:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "32772:80" 
+      
+volumes:
+  sql1data:
+  mongodata:
